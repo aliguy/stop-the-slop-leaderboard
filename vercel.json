@@ -1,0 +1,13 @@
+{
+  "buildCommand": "npx vite build",
+  "outputDirectory": "dist/public",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/$1" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "crons": [
+    { "path": "/api/admin/close-cycle", "schedule": "0 0 1 * *" }
+  ]
+}
