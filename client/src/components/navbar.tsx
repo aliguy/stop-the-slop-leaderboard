@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import { FlywheelLogo } from "./flywheel-logo";
+import { NavDropdown } from "./nav-dropdown";
 
 export function Navbar() {
   return (
@@ -16,14 +17,17 @@ export function Navbar() {
           </span>
         </a>
 
-        {/* Nav links — same as flywheelos.com */}
+        {/* Nav links — matching flywheelos.com */}
         <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
           <a href="https://flywheelos.com" className="px-4 py-2 text-[15px] font-medium text-black/50 hover:text-black hover:bg-gray-50 rounded-md transition-all">
             Home
           </a>
-          <a href="https://map.flywheelos.com" target="_blank" rel="noreferrer" className="px-4 py-2 text-[15px] font-medium text-black/50 hover:text-black hover:bg-gray-50 rounded-md transition-all">
-            Content Globe
-          </a>
+          <NavDropdown
+            label="Resources"
+            options={[
+              { href: "https://map.flywheelos.com", label: "Content Globe" },
+            ]}
+          />
           <a href="https://flywheelos.com/pricing" className="px-4 py-2 text-[15px] font-medium text-black/50 hover:text-black hover:bg-gray-50 rounded-md transition-all">
             Pricing
           </a>
