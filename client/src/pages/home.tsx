@@ -1,24 +1,13 @@
 import { useState } from "react";
 import { Navbar } from "@/components/navbar";
-import { Hero } from "@/components/hero";
-import { HowItWorks } from "@/components/how-it-works";
-import { DetectionSignals } from "@/components/detection-signals";
 import { Podium } from "@/components/podium";
 import { ReporterTable } from "@/components/reporter-table";
 import { OffenderTable } from "@/components/offender-table";
 import { CycleInfo } from "@/components/cycle-info";
-import { CTAFooter, Footer } from "@/components/footer";
+import { Footer } from "@/components/footer";
 import { useLeaderboard } from "@/hooks/use-leaderboard";
 import { useCycleInfo } from "@/hooks/use-cycle";
-import { Trophy } from "lucide-react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 
-// Mock data for initial development (before Supabase is connected)
 const MOCK_REPORTERS = [
   { display_name: "Alex Chen", linkedin_handle: "alexc_dev", avatar_url: null, total_flags: 342, total_points: 1450 },
   { display_name: "Sarah Jenkins", linkedin_handle: "sarahj_tech", avatar_url: null, total_flags: 289, total_points: 1220 },
@@ -47,33 +36,6 @@ const MOCK_CYCLE = {
   created_at: "2026-03-01",
 };
 
-const FAQ = [
-  {
-    q: "How does the AI detection work?",
-    a: "Our engine uses 17+ heuristic signals — trigger words, phrase patterns, sentence uniformity, vocabulary diversity, em dash abuse, and more. Everything runs client-side in your browser. No API calls, no data sent anywhere.",
-  },
-  {
-    q: "How do I earn points?",
-    a: "Every time you click 'Stop the Slop' on a post with an AI score of 25 or higher, the score is added to your leaderboard total. Higher AI scores earn more points. Flag consistently to climb the ranks.",
-  },
-  {
-    q: "How do monthly cycles work?",
-    a: "Each competition runs from the 1st to the last day of the month. At the end, rankings are archived, the top reporter wins the prize pool, and a fresh cycle begins automatically.",
-  },
-  {
-    q: "What prevents gaming the system?",
-    a: "Multiple safeguards: maximum 50 flags per day, minimum AI score of 25 to submit, duplicate post detection, email-verified accounts, and device fingerprinting for abuse review.",
-  },
-  {
-    q: "Is the prize pool real?",
-    a: "Yes. Each monthly cycle has a real cash prize awarded to the Top Slop Identifier — the reporter with the highest total points at cycle end.",
-  },
-  {
-    q: "Does the extension collect my data?",
-    a: "No. The detection engine runs entirely in your browser. The only data sent to our server is when you actively click 'Stop the Slop' — a hash of the post, the AI score, and the detected signals. We never see the full post content.",
-  },
-];
-
 export default function Home() {
   const [activeTab, setActiveTab] = useState<"reporters" | "offenders">("reporters");
 
@@ -89,41 +51,11 @@ export default function Home() {
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white flex flex-col">
       <Navbar />
 
-      {/* Hero */}
-      <Hero />
-
-      {/* Transition text */}
-      <div className="w-full flex justify-center border-b border-border bg-white">
-        <div className="w-full max-w-[1300px] border-x border-border p-10 md:p-16 flex items-center justify-center">
-          <h2 className="text-[32px] md:text-[40px] font-medium leading-[1.15] tracking-tight max-w-[800px] text-center">
-            LinkedIn is drowning in AI-generated content. Help us identify it, measure it, and stop it.
-          </h2>
-        </div>
-      </div>
-
-      {/* How It Works */}
-      <HowItWorks />
-
-      {/* Spacer */}
-      <div className="w-full flex justify-center border-b border-border bg-white">
-        <div className="w-full max-w-[1300px] border-x border-border h-16 md:h-24" />
-      </div>
-
-      {/* Detection Signals */}
-      <DetectionSignals />
-
-      {/* Spacer */}
-      <div className="w-full flex justify-center border-b border-border bg-white">
-        <div className="w-full max-w-[1300px] border-x border-border h-16 md:h-24" />
-      </div>
-
-      {/* Leaderboard Section */}
-      <div id="leaderboard" className="w-full flex justify-center border-b border-border bg-[#F8F7F4]">
+      {/* Leaderboard */}
+      <div className="w-full flex justify-center flex-1 bg-[#F8F7F4]">
         <div className="w-full max-w-[1300px] border-x border-border py-16 md:py-24 px-6 md:px-12 flex flex-col bg-[#F8F7F4]">
-          {/* Podium */}
           <Podium reporters={reporters} />
 
-          {/* Section Header */}
           <div className="mb-12">
             <div className="text-[14px] uppercase tracking-widest font-semibold mb-4 text-black/40">
               Live Rankings
@@ -137,10 +69,8 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Cycle Info */}
           <CycleInfo cycle={cycle} />
 
-          {/* Tab Navigation */}
           <div className="flex w-full max-w-md border border-black bg-white mb-8">
             <button
               onClick={() => setActiveTab("reporters")}
@@ -164,7 +94,6 @@ export default function Home() {
             </button>
           </div>
 
-          {/* Tab Content */}
           <div className="flex-1 w-full">
             {activeTab === "reporters" ? (
               <ReporterTable reporters={reporters} />
@@ -175,42 +104,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* FAQ */}
-      <div className="w-full flex justify-center border-b border-border bg-white">
-        <div className="w-full max-w-[1300px] border-x border-border flex flex-col">
-          <div className="w-full p-10 md:px-16 md:py-12 border-b border-border">
-            <div className="text-[14px] uppercase tracking-widest font-semibold mb-4 text-black/40">
-              FAQ
-            </div>
-            <h2 className="text-[32px] font-semibold tracking-tight leading-[1.2]">
-              Frequently Asked Questions
-            </h2>
-          </div>
-          <div className="w-full flex flex-col">
-            <Accordion type="single" collapsible className="w-full">
-              {FAQ.map((faq, i) => (
-                <AccordionItem
-                  key={i}
-                  value={`item-${i}`}
-                  className="border-b border-border last:border-0 px-8"
-                >
-                  <AccordionTrigger className="hover:no-underline text-[18px] font-medium tracking-tight py-8 text-left hover:text-black/50 transition-colors">
-                    {faq.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-[16px] text-black/50 leading-relaxed pb-8">
-                    {faq.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </div>
-
-      {/* CTA Footer */}
-      <CTAFooter />
-
-      {/* Footer */}
       <Footer />
     </div>
   );
