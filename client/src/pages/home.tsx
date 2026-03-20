@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Navbar } from "@/components/navbar";
+import { Hero } from "@/components/hero";
 import { Podium } from "@/components/podium";
 import { ReporterTable } from "@/components/reporter-table";
 import { OffenderTable } from "@/components/offender-table";
@@ -50,6 +51,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-white text-black font-sans selection:bg-black selection:text-white flex flex-col">
       <Navbar />
+      <Hero />
 
       {/* Leaderboard */}
       <div className="w-full flex justify-center flex-1 bg-[#F8F7F4]">
